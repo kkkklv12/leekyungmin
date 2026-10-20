@@ -1,70 +1,250 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>My Little iPhone</title>
 <style>
-:root{--accent:#8e9cf5;--wall:linear-gradient(145deg,#dce8ff,#fce1ed)}
-*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#edf0f7;color:#222}
-.phone{width:min(100%,430px);min-height:100dvh;margin:auto;padding:18px 16px 26px;background:var(--wall);position:relative;overflow:hidden}
-.status{display:flex;justify-content:space-between;font-size:13px;font-weight:700;padding:3px 7px 15px}
-.top{display:flex;align-items:center;justify-content:space-between;margin:8px 4px 22px}.top h1{font-size:25px;margin:0}.pill{border:0;border-radius:20px;padding:9px 13px;background:#ffffffb8;color:#333}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px 10px}.app{border:0;background:transparent;text-align:center;color:#222;font:inherit;padding:0;min-width:0}.ico{width:58px;height:58px;border-radius:17px;background:#fff;display:grid;place-items:center;font-size:29px;margin:0 auto 6px;box-shadow:0 5px 14px #00000012}.app span{font-size:11px;text-shadow:0 1px 4px #fff}
-.dock{position:sticky;bottom:8px;display:flex;justify-content:space-around;margin:30px 3px 0;padding:12px 5px;border-radius:26px;background:#ffffff9c;backdrop-filter:blur(15px)}
-.panel{display:none;position:absolute;inset:0;background:#f7f7fb;z-index:5;padding:18px 16px 30px;overflow:auto}.panel.show{display:block}.panelhead{display:flex;align-items:center;gap:12px;margin:20px 0}.back{border:0;border-radius:14px;background:#e6e8f2;padding:10px 13px}.panel h2{margin:0;font-size:23px}.card{background:white;border-radius:17px;padding:14px;margin:10px 0;box-shadow:0 2px 10px #00000008}.muted{color:#777;font-size:13px}input,textarea,select{font:inherit;width:100%;padding:12px;border:1px solid #ddd;border-radius:12px;margin:6px 0;background:white}textarea{min-height:100px;resize:vertical}button.primary{border:0;background:var(--accent);color:white;border-radius:12px;padding:11px 14px;font:inherit}button.small{border:0;background:#eceef6;border-radius:10px;padding:8px 10px}.listitem{padding:12px 2px;border-bottom:1px solid #eee;overflow-wrap:anywhere}.bubble{background:#e6eaff;padding:10px 13px;border-radius:16px;margin:8px 0;max-width:85%;overflow-wrap:anywhere}.bubble.me{background:#d4f5d7;margin-left:auto}.photo{width:100%;border-radius:12px;margin-top:8px}.wallchoice{height:48px;border-radius:12px;border:2px solid white;margin:5px}
+*{box-sizing:border-box}
+body{margin:0;background:#ddd;font-family:-apple-system,BlinkMacSystemFont,"Arial",sans-serif;color:#222}
+button,input{font:inherit}
+button{cursor:pointer;border:0}
+.phone{width:100%;max-width:430px;min-height:100dvh;margin:auto;position:relative;overflow:hidden;background:#b9c8e9}
+.status{height:48px;padding:14px 25px 5px;display:flex;justify-content:space-between;font-weight:700;font-size:14px}
+#home{min-height:calc(100dvh - 48px);padding:12px 20px 24px;background:linear-gradient(155deg,#c9d9f8,#e9cfe8,#f7d7d2);background-size:cover}
+.welcome{padding:16px 5px 25px;color:#fff;text-shadow:0 1px 5px #777}
+.welcome h2{font-size:27px;margin:0 0 5px}
+.welcome p{margin:0}
+.apps{display:grid;grid-template-columns:repeat(4,1fr);gap:26px 8px}
+.app{display:flex;align-items:center;flex-direction:column;gap:6px;color:white;font-size:12px;text-shadow:0 1px 4px #555}
+.icon{width:58px;height:58px;border-radius:15px;display:grid;place-items:center;font-size:31px;background:#fff;box-shadow:0 3px 8px #0002;text-shadow:none}
+.phoneicon{background:#39c96b}.kakaoicon{background:#ffe500}.instaicon{background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045)}.navericon{background:#03c75a}.youtubeicon{background:#fff}.messageicon{background:#48cf79}.settingicon{background:#ddd}
+.dock{margin-top:32px;padding:13px 10px;border-radius:25px;background:#ffffff66;display:flex;justify-content:space-around}
+.dock button{background:transparent;font-size:28px}
+.screen{display:none;min-height:calc(100dvh - 48px);background:#f7f7fa;padding-bottom:85px}
+.top{height:54px;padding:12px 16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #ddd;background:#fff}
+.top button{background:transparent;font-size:23px}
+.top strong{font-size:19px}
+.content{padding:16px}
+.card{background:white;padding:15px;border-radius:15px;margin-bottom:12px;box-shadow:0 1px 5px #0000000b}
+input{width:100%;padding:12px;border:1px solid #ddd;border-radius:12px;margin:5px 0 10px;outline-color:#777}
+.primary{padding:12px 15px;border-radius:12px;background:#222;color:white}
+.secondary{padding:10px 12px;border-radius:10px;background:#eee;color:#222}
+.line{display:flex;align-items:center;gap:10px;padding:13px 4px;border-bottom:1px solid #eee}
+.line span{flex:1;overflow-wrap:anywhere}
+.muted{color:#888;font-size:13px}
+.tabs{position:fixed;bottom:0;width:min(100%,430px);display:flex;justify-content:space-around;background:#fff;border-top:1px solid #ddd;padding:12px 4px calc(12px + env(safe-area-inset-bottom));z-index:5}
+.tabs button{background:transparent;font-size:12px;display:flex;flex-direction:column;align-items:center;gap:5px}
+.tabs b{font-size:22px}
+.bubble{background:#fee500;border-radius:14px;padding:12px;margin:10px 0;max-width:85%;overflow-wrap:anywhere}
+.bubble.me{margin-left:auto;background:#d6e7ff}
+.post{background:#fff;border:1px solid #eee;margin-bottom:17px}
+.posthead{padding:12px;font-weight:bold}
+.postpic{height:240px;display:grid;place-items:center;font-size:70px;background:linear-gradient(135deg,#f5d7e5,#c9d8f5)}
+.postbody{padding:12px}
+#wallpaper{position:absolute;inset:0;z-index:-1}
 </style>
 </head>
 <body>
-<div class="phone" id="phone">
- <div class="status"><span>9:41</span><span>●●● ▰</span></div>
- <div class="top"><div><div class="muted" id="dateText">좋은 하루야 ☁️</div><h1 id="ownerTitle">My iPhone</h1></div><button class="pill" onclick="openApp('설정')">⚙️ 설정</button></div>
- <div class="grid" id="appGrid"></div>
- <div class="dock" id="dock"></div>
- <section class="panel" id="panel"><div class="panelhead"><button class="back" onclick="closeApp()">‹ 홈</button><h2 id="panelTitle">앱</h2></div><div id="panelBody"></div></section>
+<div class="phone">
+  <div class="status"><span>9:41</span><span>●●●  Wi-Fi  ▰</span></div>
+
+  <main id="home">
+    <div class="welcome"><h2 id="greeting">안녕하세요 ☁️</h2><p id="dateText">나만의 작은 아이폰</p></div>
+    <div class="apps">
+      <button class="app" onclick="openApp('phone')"><span class="icon phoneicon">📞</span>전화</button>
+      <button class="app" onclick="openApp('messages')"><span class="icon messageicon">💬</span>메시지</button>
+      <button class="app" onclick="openApp('kakao')"><span class="icon kakaoicon">💬</span>카카오톡</button>
+      <button class="app" onclick="openApp('instagram')"><span class="icon instaicon">📸</span>Instagram</button>
+      <button class="app" onclick="openApp('naver')"><span class="icon navericon">N</span>네이버</button>
+      <button class="app" onclick="openApp('youtube')"><span class="icon youtubeicon">▶️</span>YouTube</button>
+      <button class="app" onclick="openApp('settings')"><span class="icon settingicon">⚙️</span>설정</button>
+      <button class="app" onclick="openApp('notes')"><span class="icon" style="background:#fff3a7">📝</span>메모</button>
+    </div>
+    <div class="dock">
+      <button onclick="openApp('phone')">📞</button>
+      <button onclick="openApp('messages')">💬</button>
+      <button onclick="openApp('instagram')">📸</button>
+      <button onclick="openApp('settings')">⚙️</button>
+    </div>
+  </main>
+
+  <section class="screen" id="phone">
+    <div class="top"><button onclick="goHome()">‹</button><strong>전화</strong></div>
+    <div class="content">
+      <div class="tabs" style="position:static;width:100%;border:0;border-radius:12px">
+        <button onclick="phoneTab('recent')"><b>🕘</b>최근 통화</button>
+        <button onclick="phoneTab('contacts')"><b>👤</b>연락처</button>
+        <button onclick="phoneTab('keypad')"><b>🔢</b>키패드</button>
+      </div>
+      <div id="phoneArea"></div>
+    </div>
+  </section>
+
+  <section class="screen" id="messages">
+    <div class="top"><button onclick="goHome()">‹</button><strong>메시지</strong></div>
+    <div class="content"><div class="card"><label>대화 상대</label><input id="msgName" placeholder="이름"><label>메시지 내용</label><input id="msgText" placeholder="메시지 입력"><button class="primary" onclick="addMessage()">보내기</button></div><div id="msgList"></div></div>
+  </section>
+
+  <section class="screen" id="kakao">
+    <div class="top"><button onclick="goHome()">‹</button><strong>카카오톡</strong></div>
+    <div class="content">
+      <div class="card"><h3>채팅</h3><input id="chatName" placeholder="친구 이름"><button class="primary" onclick="newChat()">새 채팅 만들기</button></div>
+      <div id="chatList"></div>
+      <div id="chatRoom" style="display:none">
+        <div class="card"><button class="secondary" onclick="closeChat()">‹ 채팅 목록</button><h3 id="roomTitle"></h3><div id="chatMessages"></div><input id="chatInput" placeholder="메시지 입력"><button class="primary" onclick="sendChat()">전송</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" id="instagram">
+    <div class="top"><button onclick="goHome()">‹</button><strong>Instagram</strong></div>
+    <div class="content">
+      <div class="card"><h3>게시물 만들기 ＋</h3><input id="postCaption" placeholder="오늘의 기록을 적어 봐"><input id="postEmoji" placeholder="사진 대신 이모지 (예: 🌷)" maxlength="8"><button class="primary" onclick="addPost()">게시하기</button></div>
+      <div id="feed"></div>
+    </div>
+  </section>
+
+  <section class="screen" id="naver">
+    <div class="top"><button onclick="goHome()">‹</button><strong style="color:#03a94d">N 네이버</strong></div>
+    <div class="content">
+      <input id="searchInput" placeholder="검색어를 입력하세요" onkeydown="if(event.key==='Enter')searchNaver()">
+      <button class="primary" onclick="searchNaver()">검색</button>
+      <div class="card"><strong>최근 검색</strong><div id="searchHistory"></div><button class="secondary" onclick="clearSearch()">기록 지우기</button></div>
+      <div id="searchResult"></div>
+    </div>
+  </section>
+
+  <section class="screen" id="youtube">
+    <div class="top"><button onclick="goHome()">‹</button><strong>YouTube ▶</strong></div>
+    <div class="content">
+      <input id="videoSearch" placeholder="동영상 검색" onkeydown="if(event.key==='Enter')searchVideo()">
+      <button class="primary" onclick="searchVideo()">검색</button>
+      <div id="videoList"></div>
+      <p class="muted">가상 영상 목록이에요. 실제 동영상 서비스와 연결되지는 않아요.</p>
+    </div>
+  </section>
+
+  <section class="screen" id="settings">
+    <div class="top"><button onclick="goHome()">‹</button><strong>설정</strong></div>
+    <div class="content">
+      <div class="card"><h3>👤 프로필</h3><input id="profileName" placeholder="내 이름"><button class="primary" onclick="saveProfile()">저장</button></div>
+      <div class="card"><h3>🎨 배경화면</h3><div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="secondary" onclick="setWall('linear-gradient(145deg,#b8d8ff,#e9c7e8,#ffe3ce)')">파스텔</button>
+        <button class="secondary" onclick="setWall('linear-gradient(145deg,#172554,#6d5cae,#f2a6c0)')">밤하늘</button>
+        <button class="secondary" onclick="setWall('linear-gradient(145deg,#b8e6d1,#f8f0cf,#f2c6c6)')">정원</button>
+        <button class="secondary" onclick="setWall('linear-gradient(145deg,#fff1f5,#fbd0d9,#e7d7ff)')">핑크</button>
+      </div></div>
+      <div class="card"><h3>🌓 테마</h3><button class="secondary" onclick="setTheme('light')">밝게</button> <button class="secondary" onclick="setTheme('dark')">어둡게</button></div>
+      <div class="card"><h3>📱 나만의 아이폰</h3><p class="muted">내가 만든 가상 아이폰 · 버전 1.0</p></div>
+    </div>
+  </section>
+
+  <section class="screen" id="notes">
+    <div class="top"><button onclick="goHome()">‹</button><strong>메모</strong></div>
+    <div class="content"><div class="card"><textarea id="noteText" placeholder="메모를 적어 봐" style="width:100%;height:180px;border:1px solid #ddd;border-radius:12px;padding:12px"></textarea><button class="primary" onclick="localStorage.setItem('myNote',document.getElementById('noteText').value);alert('메모를 저장했어!')">저장</button></div></div>
+  </section>
 </div>
+
 <script>
-const defaults=[
- ['전화','📞'],['메시지','💬'],['카메라','📷'],['사진','🌄'],['카카오톡','🟡'],['네이버','🟢'],['유튜브','▶️'],['인스타그램','📸'],['메모','📝'],['일기','📔'],['캘린더','📅'],['미리 알림','☑️'],['Safari','🧭'],['음악','🎵'],['지도','🗺️'],['지갑','👛'],['디스코드','🎮'],['Pinterest','📌'],['음성 메모','🎙️'],['파일','📁'],['App Store','🅰️'],['설정','⚙️']
-];
-let data={owner:'My iPhone',accent:'#8e9cf5',wall:'linear-gradient(145deg,#dce8ff,#fce1ed)',notes:[],diary:'',messages:[],contacts:[],searches:[],videos:[],posts:[],reminders:[],photos:[],calls:[]};
-try{const saved=localStorage.getItem('littlePhone');if(saved)data={...data,...JSON.parse(saved)}}catch(e){}
-function save(){try{localStorage.setItem('littlePhone',JSON.stringify(data))}catch(e){}}
-function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function renderHome(){document.documentElement.style.setProperty('--accent',data.accent);document.getElementById('phone').style.background=data.wall;document.getElementById('ownerTitle').textContent=data.owner;document.getElementById('dateText').textContent=new Date().toLocaleDateString('ko-KR',{month:'long',day:'numeric',weekday:'short'});document.getElementById('appGrid').innerHTML=defaults.map(([n,i])=>`<button class="app" onclick="openApp('${n}')"><div class="ico">${i}</div><span>${n}</span></button>`).join('');document.getElementById('dock').innerHTML=['전화','메시지','Safari','사진'].map(n=>{let a=defaults.find(x=>x[0]===n);return `<button class="app" onclick="openApp('${n}')"><div class="ico">${a[1]}</div></button>`}).join('')}
-function closeApp(){document.getElementById('panel').classList.remove('show')}
-function openApp(name){document.getElementById('panelTitle').textContent=name;document.getElementById('panelBody').innerHTML=appContent(name);document.getElementById('panel').classList.add('show')}
-function appContent(n){
- if(n==='설정')return `<div class="card"><b>프로필</b><input id="owner" value="${esc(data.owner)}" placeholder="아이폰 이름"><button class="primary" onclick="data.owner=document.getElementById('owner').value||'My iPhone';save();renderHome();alert('저장했어!')">이름 저장</button></div><div class="card"><b>테마 색상</b><div>${['#8e9cf5','#ff91b8','#7cc9ae','#f0b85c','#a88be8'].map(c=>`<button class="wallchoice" style="background:${c}" onclick="data.accent='${c}';save();renderHome()"></button>`).join('')}</div></div><div class="card"><b>배경화면</b><div>${[['linear-gradient(145deg,#dce8ff,#fce1ed)','파스텔'],['linear-gradient(145deg,#c8f7dc,#b4d8ff)','민트'],['linear-gradient(145deg,#ffd6a5,#fd9a9a)','노을'],['linear-gradient(145deg,#292b52,#8b7bb8)','밤하늘']].map(([c,l])=>`<button class="wallchoice" title="${l}" style="width:42%;background:${c}" onclick="data.wall='${c}';save();renderHome()">${l}</button>`).join('')}</div></div><div class="card"><button class="primary" onclick="downloadBackup()">백업 파일 저장</button> <label class="small">복원하기 <input type="file" accept=".json" onchange="restoreBackup(event)"></label></div>`;
- if(n==='네이버'||n==='Safari')return `<div class="card"><b>${n} 검색</b><input id="searchQ" placeholder="검색어를 입력해 봐" onkeydown="if(event.key==='Enter')doSearch('${n}')"><button class="primary" onclick="doSearch('${n}')">검색</button><p class="muted">검색 기록과 연관 검색어가 저장돼.</p><div id="suggest"></div></div><div class="card"><b>최근 검색 기록</b>${data.searches.map(s=>`<div class="listitem" onclick="document.getElementById('searchQ').value='${esc(s)}'">${esc(s)}</div>`).join('')||'<p class="muted">아직 검색 기록이 없어.</p>'}<button class="small" onclick="data.searches=[];save();openApp('${n}')">기록 지우기</button></div>`;
- if(n==='유튜브')return `<div class="card"><b>영상 검색</b><input id="videoQ" placeholder="보고 싶은 영상"><button class="primary" onclick="addVideo()">검색 기록 저장</button></div><div class="card"><b>시청/검색 기록</b>${data.videos.map(v=>`<div class="listitem">▶️ ${esc(v)}</div>`).join('')||'<p class="muted">아직 기록이 없어.</p>'}<button class="small" onclick="data.videos=[];save();openApp('유튜브')">기록 지우기</button></div>`;
- if(n==='카카오톡'||n==='메시지')return `<div class="card"><b>대화방 만들기</b><input id="chatName" placeholder="친구 이름"><button class="primary" onclick="makeChat()">대화방 추가</button></div><div id="chatList">${data.messages.map((m,i)=>`<div class="card"><b>${esc(m.name)}</b><div class="bubble">${esc(m.text||'대화를 시작해 봐!')}</div><input id="msg${i}" placeholder="메시지 입력"><button class="small" onclick="sendMsg(${i})">보내기</button></div>`).join('')}</div>`;
- if(n==='인스타그램'||n==='Pinterest')return `<div class="card"><b>게시물 만들기</b><textarea id="postText" placeholder="무슨 생각을 하고 있어?"></textarea><button class="primary" onclick="addPost()">게시</button></div>${data.posts.map(p=>`<div class="card"><b>@my_little_world</b><p>${esc(p)}</p>♡ 좋아요　♡ 댓글</div>`).join('')}`;
- if(n==='메모')return `<div class="card"><textarea id="noteText" placeholder="메모를 적어 봐"></textarea><button class="primary" onclick="addNote()">메모 저장</button></div>${data.notes.map((t,i)=>`<div class="card">${esc(t)}<button class="small" onclick="data.notes.splice(${i},1);save();openApp('메모')">삭제</button></div>`).join('')}`;
- if(n==='일기')return `<div class="card"><b>오늘의 일기</b><textarea id="diaryText" placeholder="오늘 있었던 일을 적어 봐">${esc(data.diary)}</textarea><button class="primary" onclick="data.diary=document.getElementById('diaryText').value;save();alert('일기 저장 완료!')">저장</button></div>`;
- if(n==='미리 알림'||n==='캘린더')return `<div class="card"><b>${n==='캘린더'?'일정':'할 일'} 추가</b><input id="remText" placeholder="내용"><input id="remDate" type="date"><button class="primary" onclick="addReminder()">추가</button></div>${data.reminders.map((r,i)=>`<div class="card">📅 ${esc(r.date)}　${esc(r.text)} <button class="small" onclick="data.reminders.splice(${i},1);save();openApp('${n}')">완료/삭제</button></div>`).join('')}`;
- if(n==='사진'||n==='카메라')return `<div class="card"><b>사진 앨범</b><p class="muted">사진을 선택하면 이 기기의 브라우저에 저장돼. (저장 용량에 제한이 있을 수 있어.)</p><input type="file" accept="image/*" multiple onchange="addPhotos(event)">${data.photos.map(p=>`<img class="photo" src="${p}" alt="내 사진">`).join('')}</div>`;
- if(n==='전화')return `<div class="card"><b>전화 기록 (가상)</b><input id="phoneNum" placeholder="이름 또는 전화번호"><button class="primary" onclick="data.calls.unshift(document.getElementById('phoneNum').value);save();openApp('전화')">기록 추가</button></div>${data.calls.map(c=>`<div class="listitem">📞 ${esc(c)}</div>`).join('')}`;
- if(n==='음악')return `<div class="card"><h3>♫ 나만의 음악</h3><p>기분에 맞는 음악을 상상해 봐 🎧</p><button class="primary" onclick="alert('이 앱은 가상 화면이야. 실제 음악 재생은 지원하지 않아!')">재생 ▶</button></div>`;
- if(n==='지도')return `<div class="card"><b>장소 찾기</b><input id="mapQ" placeholder="가고 싶은 곳"><button class="primary" onclick="window.open('https://www.google.com/maps/search/'+encodeURIComponent(document.getElementById('mapQ').value),'_blank')">지도에서 보기</button></div>`;
- if(n==='지갑')return `<div class="card"><b>가상 지갑</b><p>실제 결제나 카드 정보는 저장하지 않아.</p><input placeholder="카드 별명"><button class="primary" onclick="alert('가상 카드 기능이야!')">카드 추가</button></div>`;
- if(n==='음성 메모')return `<div class="card"><b>음성 메모</b><p>이 앱 화면에서는 녹음 기능을 제공하지 않아.</p><input placeholder="녹음 제목"><button class="primary" onclick="alert('제목만 기록하는 가상 기능이야!')">확인</button></div>`;
- if(n==='파일')return `<div class="card"><b>내 파일</b><p>백업은 설정 앱에서 저장할 수 있어.</p><button class="primary" onclick="downloadBackup()">백업 JSON 다운로드</button></div>`;
- if(n==='App Store')return `<div class="card"><b>앱 스토어</b><p>여기는 가상 앱 스토어야. 앱 설치는 실제로 되지 않아.</p></div>`;
- if(n==='디스코드')return `<div class="card"><b>가상 서버</b><p>친구들과 이야기하는 공간을 상상해 봐 💜</p><input placeholder="메시지"><button class="primary" onclick="alert('가상 화면이라 실제 전송은 안 돼!')">보내기</button></div>`;
- return `<div class="card"><b>${esc(n)}</b><p>이 앱은 가상 아이폰을 꾸미기 위한 모형이야.</p></div>`;
+const $=id=>document.getElementById(id);
+const read=(key,def=[])=>{try{return JSON.parse(localStorage.getItem(key))??def}catch{return def}};
+const save=(key,val)=>localStorage.setItem(key,JSON.stringify(val));
+let activeChat='';
+function openApp(id){
+  $('home').style.display='none';
+  document.querySelectorAll('.screen').forEach(s=>s.style.display='none');
+  $(id).style.display='block';
+  if(id==='phone')phoneTab('recent');
+  if(id==='messages')renderMessages();
+  if(id==='kakao')renderChats();
+  if(id==='instagram')renderFeed();
+  if(id==='naver')renderHistory();
+  if(id==='youtube')searchVideo('');
+  if(id==='settings')$('profileName').value=localStorage.getItem('profileName')||'';
+  if(id==='notes')$('noteText').value=localStorage.getItem('myNote')||'';
 }
-function doSearch(n){let q=document.getElementById('searchQ').value.trim();if(!q)return;data.searches.unshift(q);data.searches=[...new Set(data.searches)].slice(0,30);save();if(n==='Safari')window.open('https://www.google.com/search?q='+encodeURIComponent(q),'_blank');openApp(n)}
-function addVideo(){let q=document.getElementById('videoQ').value.trim();if(q){data.videos.unshift(q);save();openApp('유튜브')}}
-function makeChat(){let q=document.getElementById('chatName').value.trim();if(q){data.messages.push({name:q,text:''});save();openApp('카카오톡')}}
-function sendMsg(i){let q=document.getElementById('msg'+i).value.trim();if(q){data.messages[i].text=q;save();openApp('카카오톡')}}
-function addPost(){let q=document.getElementById('postText').value.trim();if(q){data.posts.unshift(q);save();openApp('인스타그램')}}
-function addNote(){let q=document.getElementById('noteText').value.trim();if(q){data.notes.unshift(q);save();openApp('메모')}}
-function addReminder(){let q=document.getElementById('remText').value.trim();if(q){data.reminders.push({text:q,date:document.getElementById('remDate').value||'날짜 미정'});save();openApp('미리 알림')}}
-function addPhotos(e){[...e.target.files].forEach(f=>{let r=new FileReader();r.onload=()=>{data.photos.unshift(r.result);save();openApp('사진')};r.readAsDataURL(f)})}
-function downloadBackup(){let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));a.download='my-little-iphone-backup.json';a.click();URL.revokeObjectURL(a.href)}
-function restoreBackup(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{data={...data,...JSON.parse(r.result)};save();renderHome();alert('복원했어!')}catch(err){alert('파일을 읽을 수 없어.')}};r.readAsText(f)}
-renderHome();
+function goHome(){
+  document.querySelectorAll('.screen').forEach(s=>s.style.display='none');
+  $('home').style.display='block';
+}
+$('dateText').textContent=new Date().toLocaleDateString('ko-KR',{month:'long',day:'numeric',weekday:'long'});
+$('greeting').textContent=(localStorage.getItem('profileName')||'안녕하세요')+' ☁️';
+if(localStorage.getItem('wall'))$('home').style.background=localStorage.getItem('wall');
+function setWall(w){localStorage.setItem('wall',w);$('home').style.background=w}
+function saveProfile(){let n=$('profileName').value.trim()||'안녕하세요';localStorage.setItem('profileName',n);$('greeting').textContent=n+' ☁️';alert('프로필을 저장했어!')}
+function setTheme(t){document.body.style.filter=t==='dark'?'brightness(.78)':'none';localStorage.setItem('theme',t)}
+if(localStorage.getItem('theme')==='dark')setTheme('dark');
+
+function phoneTab(tab){
+ let area=$('phoneArea');
+ if(tab==='keypad'){
+  area.innerHTML='<div class="card"><input id="dial" placeholder="전화번호" readonly><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">'+['1','2','3','4','5','6','7','8','9','*','0','#'].map(n=>`<button class="secondary" style="font-size:24px;padding:17px" onclick="$('dial').value+= '${n}'">${n}</button>`).join('')+'</div><button class="primary" style="width:100%;margin-top:12px" onclick="callNumber()">📞 가상 통화 기록 추가</button><button class="secondary" onclick="$('dial').value=\'\'">지우기</button></div>';
+ }else if(tab==='contacts'){
+  area.innerHTML='<div class="card"><input id="contactName" placeholder="이름"><input id="contactNumber" placeholder="전화번호"><button class="primary" onclick="addContact()">연락처 저장</button></div><div id="contactList"></div>';renderContacts();
+ }else{
+  let a=read('calls');area.innerHTML='<h3>최근 통화</h3><div class="card">'+(a.length?a.slice().reverse().map(c=>`<div class="line"><span>📞 ${esc(c.name)}<br><small class="muted">${esc(c.number||'')}</small></span><small class="muted">${esc(c.time)}</small><button class="secondary" onclick="deleteCall(${a.indexOf(c)})">삭제</button></div>`).join(''):'최근 통화가 없어요')+'</div>';
+ }
+}
+function callNumber(){
+ let n=$('dial').value;if(!n)return alert('번호를 입력해 줘');
+ let a=read('calls');a.push({name:n,number:n,time:new Date().toLocaleString('ko-KR')});save('calls',a);alert('가상 통화 기록을 저장했어!');phoneTab('recent')
+}
+function addContact(){
+ let n=$('contactName').value.trim(),p=$('contactNumber').value.trim();if(!n||!p)return alert('이름과 번호를 입력해 줘');
+ let a=read('contacts');a.push({name:n,number:p});save('contacts',a);phoneTab('contacts')
+}
+function renderContacts(){
+ let a=read('contacts');let el=$('contactList');if(!el)return;
+ el.innerHTML='<div class="card">'+(a.length?a.map((c,i)=>`<div class="line"><span>👤 ${esc(c.name)}<br><small>${esc(c.number)}</small></span><button class="secondary" onclick="removeContact(${i})">삭제</button></div>`).join(''):'저장된 연락처가 없어요')+'</div>'
+}
+function removeContact(i){let a=read('contacts');a.splice(i,1);save('contacts',a);renderContacts()}
+function deleteCall(i){let a=read('calls');a.splice(i,1);save('calls',a);phoneTab('recent')}
+function addMessage(){
+ let n=$('msgName').value.trim(),t=$('msgText').value.trim();if(!n||!t)return alert('이름과 메시지를 입력해 줘');
+ let a=read('texts');a.push({name:n,text:t,time:new Date().toLocaleString('ko-KR')});save('texts',a);$('msgText').value='';renderMessages()
+}
+function renderMessages(){
+ let a=read('texts');$('msgList').innerHTML=a.slice().reverse().map((m,i)=>`<div class="card"><strong>💬 ${esc(m.name)}</strong><p>${esc(m.text)}</p><small class="muted">${esc(m.time)}</small><button class="secondary" onclick="removeText(${a.length-1-i})">삭제</button></div>`).join('')||'<p class="muted">아직 메시지가 없어요.</p>'
+}
+function removeText(i){let a=read('texts');a.splice(i,1);save('texts',a);renderMessages()}
+function newChat(){
+ let n=$('chatName').value.trim();if(!n)return alert('친구 이름을 입력해 줙');
+ let a=read('chats');if(!a.some(c=>c.name===n))a.push({name:n,messages:[]});save('chats',a);$('chatName').value='';renderChats()
+}
+function renderChats(){
+ let a=read('chats');$('chatList').innerHTML=a.map(c=>`<div class="line" onclick="openChat('${esc(c.name).replace(/'/g,"&#39;")}')"><span>🟡 <b>${esc(c.name)}</b><br><small class="muted">${esc(c.messages.at(-1)||'대화를 시작해 보세요')}</small></span><button class="secondary" onclick="event.stopPropagation();deleteChat('${esc(c.name).replace(/'/g,"&#39;")}')">삭제</button></div>`).join('')||'<p class="muted">새 채팅을 만들어 봐!</p>'
+}
+function openChat(n){activeChat=n;$('chatRoom').style.display='block';$('roomTitle').textContent=n;$('chatList').style.display='none';renderChatMessages()}
+function closeChat(){$('chatRoom').style.display='none';$('chatList').style.display='block';renderChats()}
+function renderChatMessages(){
+ let c=read('chats').find(c=>c.name===activeChat);$('chatMessages').innerHTML=(c?.messages||[]).map((m,i)=>`<div class="bubble me">${esc(m)} <button onclick="deleteChatMessage(${i})">×</button></div>`).join('')||'<p class="muted">첫 메시지를 보내 보세요!</p>'
+}
+function sendChat(){let t=$('chatInput').value.trim();if(!t)return;let a=read('chats'),c=a.find(c=>c.name===activeChat);if(c){c.messages.push(t);save('chats',a)}$('chatInput').value='';renderChatMessages();renderChats()}
+function deleteChatMessage(i){let a=read('chats'),c=a.find(c=>c.name===activeChat);if(c)c.messages.splice(i,1);save('chats',a);renderChatMessages();renderChats()}
+function deleteChat(n){save('chats',read('chats').filter(c=>c.name!==n));renderChats()}
+function addPost(){
+ let t=$('postCaption').value.trim(),e=$('postEmoji').value.trim()||'🌷';if(!t)return alert('게시물 내용을 적어 줘');
+ let a=read('posts');a.unshift({text:t,emoji:e,likes:0});save('posts',a);$('postCaption').value='';$('postEmoji').value='';renderFeed()
+}
+function renderFeed(){
+ let a=read('posts');$('feed').innerHTML=a.map((p,i)=>`<div class="post"><div class="posthead">📷 my_little_iphone</div><div class="postpic">${esc(p.emoji)}</div><div class="postbody"><button onclick="likePost(${i})">♡ ${p.likes}</button> <button onclick="deletePost(${i})">삭제</button><p>${esc(p.text)}</p><small class="muted">가상 게시물</small></div></div>`).join('')||'<p class="muted">아직 게시물이 없어요.</p>'
+}
+function likePost(i){let a=read('posts');a[i].likes++;save('posts',a);renderFeed()}
+function deletePost(i){let a=read('posts');a.splice(i,1);save('posts',a);renderFeed()}
+function searchNaver(){
+ let q=$('searchInput').value.trim();if(!q)return;let a=read('searches');a.unshift(q);save('searches',a.slice(0,30));$('searchResult').innerHTML=`<div class="card"><h3>“${esc(q)}” 검색</h3><p>가상 검색 결과</p><p>이 화면은 연습용으로 만든 검색 화면이에요.</p><button class="primary" onclick="window.open('https://search.naver.com/search.naver?query='+encodeURIComponent(${JSON.stringify(q)}),'_blank')">실제 네이버에서 검색</button></div>`;renderHistory()
+}
+function renderHistory(){$('searchHistory').innerHTML=read('searches').map(q=>`<div class="line"><span onclick="$('searchInput').value='${esc(q).replace(/'/g,"&#39;")}';searchNaver()">${esc(q)}</span><button class="secondary" onclick="removeSearch('${esc(q).replace(/'/g,"&#39;")}')">×</button></div>`).join('')||'<p class="muted">검색 기록이 없어요.</p>'}
+function removeSearch(q){save('searches',read('searches').filter(x=>x!==q));renderHistory()}
+function clearSearch(){save('searches',[]);renderHistory()}
+function searchVideo(q){
+ q=q??$('videoSearch').value.trim();let items=q?[q+' 관련 영상',q+' 추천 영상','인기 동영상']:['오늘의 브이로그','일상 기록 모음','음악 플레이리스트','귀여운 동물 영상'];
+ $('videoList').innerHTML=items.map((v,i)=>`<div class="card" onclick="playVideo('${esc(v).replace(/'/g,"&#39;")}')"><div style="height:150px;background:${['#f3c5d7','#c5d7f3','#d0e9d7'][i%3]};display:grid;place-items:center;font-size:45px">▶️</div><p><b>${esc(v)}</b></p><small class="muted">가상 영상 · 눌러서 열기</small></div>`).join('')
+}
+function playVideo(v){$('videoList').innerHTML=`<div class="card"><button class="secondary" onclick="searchVideo('')">‹ 목록으로</button><div style="height:200px;background:#222;color:white;display:grid;place-items:center;font-size:50px">▶</div><h3>${esc(v)}</h3><p>가상 영상 재생 화면이에요.</p></div>`}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 </script>
 </body>
 </html>
